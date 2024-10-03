@@ -3534,28 +3534,28 @@
 	
    <compoundParameter id="birthRate.increments">
         <parameter id="birthRateAtPresent" value="-2.0" />
-        <parameter id="birthRateDelta" dimension="19" value="0.01" />
+        <parameter id="birthRateDelta" dimension="39" value="0.01" />
     </compoundParameter>
 
-    <transformedVectorSumTransform id="bdss.birthRate" dim="20" incrementTransformType="log">
+    <transformedVectorSumTransform id="bdss.birthRate" dim="40" incrementTransformType="log">
         <compoundParameter idref="birthRate.increments" />
     </transformedVectorSumTransform>
 
     <compoundParameter id="deathRate.increments">
         <parameter id="deathRateAtPresent" value="-2.0" />
-        <parameter id="deathRateDelta" dimension="19" value="0" />
+        <parameter id="deathRateDelta" dimension="39" value="0" />
     </compoundParameter>
 
-    <transformedVectorSumTransform id="bdss.deathRate" dim="20" incrementTransformType="log">
+    <transformedVectorSumTransform id="bdss.deathRate" dim="40" incrementTransformType="log">
         <compoundParameter idref="deathRate.increments" />
     </transformedVectorSumTransform>
 
     <compoundParameter id="samplingRate.increments">
         <parameter id="samplingRateAtPresent" value="-2.0" />
-        <parameter id="samplingRateDelta" dimension="19" value="0.01" />
+        <parameter id="samplingRateDelta" dimension="39" value="0.01" />
     </compoundParameter>
 
-    <transformedVectorSumTransform id="bdss.samplingRate" dim="20" incrementTransformType="log">
+    <transformedVectorSumTransform id="bdss.samplingRate" dim="40" incrementTransformType="log">
         <compoundParameter idref="samplingRate.increments" />
     </transformedVectorSumTransform>
 
@@ -3572,11 +3572,11 @@
         <samplingProbability gradientFlag="false">
             <compoundParameter id="bdss.samplingProbability">
                 <parameter id="samplingAtPresent" value="0" dimension="1" lower="0.0" upper="1.0" />
-                <parameter id="otherSampling" value="0" dimension="19" lower="0.0" upper="1.0" />
+                <parameter id="otherSampling" value="0" dimension="39" lower="0.0" upper="1.0" />
             </compoundParameter>
         </samplingProbability>
         <treatmentProbability gradientFlag="false">
-            <parameter id="bdss.treatmentProbability" value="1.0" dimension="20" lower="0.0" upper="1.0" />
+            <parameter id="bdss.treatmentProbability" value="1.0" dimension="40" lower="0.0" upper="1.0" />
         </treatmentProbability>
         <origin>
             <parameter id="bdss.origin" value="0.75" lower="0.0" />
@@ -3585,7 +3585,7 @@
             <parameter value="0.83835" />
         </cutOff>
         <numGridPoints>
-            <parameter value="20" />
+            <parameter value="40" />
         </numGridPoints>
     </newBirthDeathSerialSampling>
 
@@ -3703,10 +3703,10 @@
         <distribution>
             <normalDistributionModel id="birthRateAtPresentPriorDistribution">
                 <mean>
-                    <parameter value="2.0423" />
+                    <parameter value="1.726466" />
                 </mean>
                 <stdev>
-                    <parameter value="1.1748" lower="0.0" />
+                    <parameter value="1.17481" lower="0.0" />
                 </stdev>
             </normalDistributionModel>
         </distribution>
@@ -3719,10 +3719,10 @@
         <distribution>
             <normalDistributionModel id="deathRateAtPresentPriorDistribution">
                 <mean>
-                    <parameter value="2.9143" />
+                    <parameter value="2.914951" />
                 </mean>
                 <stdev>
-                    <parameter value="0.1768" lower="0.0" />
+                    <parameter value="0.1768233" lower="0.0" />
                 </stdev>
             </normalDistributionModel>
         </distribution>
@@ -3735,10 +3735,10 @@
         <distribution>
             <normalDistributionModel id="samplingRateAtPresentPriorDistribution">
                 <mean>
-                    <parameter value="0.99379" />
+                    <parameter value="0.9356039" />
                 </mean>
                 <stdev>
-                    <parameter value="0.23" lower="0.0" />
+                    <parameter value="0.2362244" lower="0.0" />
                 </stdev>
             </normalDistributionModel>
         </distribution>
@@ -3751,14 +3751,11 @@
             <parameter id="birthRateDeltaPrior.globalScale" value="0.1" lower="0.0" />
         </globalScale>
         <localScale>
-            <parameter id="birthRateDeltaPrior.localScale" value="0.1" dimension="19" /> 
+            <parameter id="birthRateDeltaPrior.localScale" value="1" dimension="39" /> 
         </localScale>
         <exponent>
-            <parameter value="0.25" />
+            <parameter value="2.0" />
         </exponent>
-		<slabWidth>
-			<parameter value="2.0" />
-		</slabWidth>
     </bayesianBridge>
 
     <bayesianBridge id="samplingRateDeltaPrior">
@@ -3767,7 +3764,7 @@
             <parameter id="samplingRateDeltaPrior.globalScale" value="0.1" lower="0.0" />
         </globalScale>
         <localScale>
-            <parameter id="samplingRateDeltaPrior.localScale" value="1" dimension="19" />
+            <parameter id="samplingRateDeltaPrior.localScale" value="1" dimension="39" />
         </localScale>
         <exponent>
             <parameter value="2" />
@@ -3775,7 +3772,7 @@
     </bayesianBridge>
 
 
-    <gammaPrior id="birthRateDeltaGlobalScalePrior" shape="1" scale="1">
+    <gammaPrior id="birthRateDeltaGlobalScalePrior" shape="0.1" scale="0.1">
         <parameter idref="birthRateDeltaPrior.globalScale" />
     </gammaPrior>
 
@@ -4768,6 +4765,9 @@
         </randomWalkOperator>
 
 		<randomWalkOperator windowSize="1.0" weight="1.0">
+    		<parameter idref="birthRateDeltaPrior.globalScale" />
+		</randomWalkOperator>
+		<randomWalkOperator windowSize="1.0" weight="1.0">
    			 <parameter idref="samplingRateDeltaPrior.globalScale" />
 		</randomWalkOperator>
         <randomWalkOperator windowSize="1.0" weight="1.0">
@@ -4776,18 +4776,11 @@
 		<randomWalkOperator windowSize="1.0" weight="1.0">
 			<parameter idref="bdss.origin" />
 		</randomWalkOperator>
-
-		
-		<bayesianBridgeGibbsOperator weight="1">
-			<bayesianBridge idref="birthRateDeltaPrior" />
-			<gammaPrior idref="birthRateDeltaGlobalScalePrior" />
-		</bayesianBridgeGibbsOperator>
-		
 	</operators>
 	
 
 	
-	<mcmc id="mcmc" chainLength="800000000" autoOptimize="true" operatorAnalysis="top13clusters.ops">
+	<mcmc id="mcmc" chainLength="1000000000" autoOptimize="false" operatorAnalysis="top10clusters.ops">
 		<joint id="joint">
 			<prior id="prior">
 				<dirichletPrior alpha="1.0" sumsTo="6.0">
@@ -4887,7 +4880,7 @@
 				<gammaPrior idref="samplingRateDeltaGlobalScalePrior" />
 				<distributionLikelihood idref="deathRateAtPresentPrior" />
 				<truncated lower="0.0">
-					<normalPrior mean="0.7" stdev="0.1">
+					<normalPrior mean="0.795" stdev="0.1">
 						<parameter idref="bdss.origin" />
 					</normalPrior>
 				</truncated>
@@ -5021,7 +5014,7 @@
 		</log>
 
 		
-		<log id="fileLog" logEvery="1000" fileName="top13clusters_gmrf.log" overwrite="false">
+		<log id="fileLog" logEvery="100000" fileName="6top13clusters_gmrf.log" overwrite="false">
 			<joint idref="joint" />
 			<prior idref="prior" />
 			<likelihood idref="likelihood" />
@@ -5146,99 +5139,6 @@
             <speciationLikelihood idref="speciation.cluster12" />
             <speciationLikelihood idref="speciation.cluster13" />
 		</log>
-
-		
-		<logTree id="import_cluster_1.treeFileLog" logEvery="1000" nexusFormat="true" fileName="top13clusters.import_cluster_1.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_1.treeModel" />
-			<trait name="rate" tag="import_cluster_1.rate">
-				<strictClockBranchRates idref="import_cluster_1.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_2.treeFileLog" logEvery="1000" nexusFormat="true" fileName="top13clusters.import_cluster_2.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_2.treeModel" />
-			<trait name="rate" tag="import_cluster_2.rate">
-				<strictClockBranchRates idref="import_cluster_2.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_3.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_3.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_3.treeModel" />
-			<trait name="rate" tag="import_cluster_3.rate">
-				<strictClockBranchRates idref="import_cluster_3.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_4.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_4.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_4.treeModel" />
-			<trait name="rate" tag="import_cluster_4.rate">
-				<strictClockBranchRates idref="import_cluster_4.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_5.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_5.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_5.treeModel" />
-			<trait name="rate" tag="import_cluster_5.rate">
-				<strictClockBranchRates idref="import_cluster_5.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_6.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_6.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_6.treeModel" />
-			<trait name="rate" tag="import_cluster_6.rate">
-				<strictClockBranchRates idref="import_cluster_6.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_7.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_7.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_7.treeModel" />
-			<trait name="rate" tag="import_cluster_7.rate">
-				<strictClockBranchRates idref="import_cluster_7.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_8.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_8.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_8.treeModel" />
-			<trait name="rate" tag="import_cluster_8.rate">
-				<strictClockBranchRates idref="import_cluster_8.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_9.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_9.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_9.treeModel" />
-			<trait name="rate" tag="import_cluster_9.rate">
-				<strictClockBranchRates idref="import_cluster_9.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_10.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_10.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_10.treeModel" />
-			<trait name="rate" tag="import_cluster_10.rate">
-				<strictClockBranchRates idref="import_cluster_10.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_11.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_11.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_11.treeModel" />
-			<trait name="rate" tag="import_cluster_11.rate">
-				<strictClockBranchRates idref="import_cluster_11.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_12.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_12.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_12.treeModel" />
-			<trait name="rate" tag="import_cluster_12.rate">
-				<strictClockBranchRates idref="import_cluster_12.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
-		<logTree id="import_cluster_13.treeFileLog" logEvery="10000" nexusFormat="true" fileName="top13clusters.import_cluster_13.trees" sortTranslationTable="true">
-			<treeModel idref="import_cluster_13.treeModel" />
-			<trait name="rate" tag="import_cluster_13.rate">
-				<strictClockBranchRates idref="import_cluster_13.branchRates" />
-			</trait>
-			<joint idref="joint" />
-		</logTree>
 	</mcmc>
 	
 	<report>

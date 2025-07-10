@@ -14,7 +14,7 @@ include("heavytail.jl")
 include("outbreaklikelihood.jl")
 gr(fontfamily="Helvetica",foreground_color_legend = nothing,background_color_legend = nothing, titlefontsize=11, tickfontsize=10, legendfontsize=10,labelfontsize=10,grid=true, tick_direction=:out,size=(400,300))
     
-# Code is primarily based on and pulled from Endo et al., 2022.
+# Code is primarily based on and pulled from Endo et al., 2022. For dependencies, please refer to their Github: https://github.com/akira-endo/monkeypox_heavytail/tree/main/src
 
 # Util function
 Base.:-(x::Tuple{Float64,Float64,Float64},y::Int)=x.-y
